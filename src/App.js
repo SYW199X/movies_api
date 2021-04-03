@@ -73,14 +73,14 @@ const App = () => {
         <Router>
             <Header />
             <Route path='/' exact>
-                <Content baseUrl={baseUrl} index={index} displayObject={displayThis} 
-                picUrl={`${baseUrl}${displayThis[index].poster_path}`} key={index} rerender={changeMe}/>
+                <Content baseUrl={baseUrl} index={index} displayObject={displayThis} key={index}/>
+                <br/>
+                <button style={{height: "50px", width: "100px"}} onClick={clickedIterate}>Next</button>
             </Route>
-            <Route path='/movies/:id'>
-                <Movie />
+            <Route path='/movies/:media/:id'>
+                <Movie baseUrl={baseUrl}/>
             </Route>
-            <br/>
-            <button style={{height: "50px", width: "100px"}} onClick={clickedIterate}>Next</button>
+            
         </Router>
     )
 }
