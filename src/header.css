@@ -11,6 +11,7 @@
 .logo-text {
 	height:15vh;
 	width:15vh;
+	margin-right: 20px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../logo.png'
 
 const Header = () => {
-
+    useEffect(() => {
+        console.log("header called")
+    }, [])
     return (
         <header className="header">
             <title>My Movies</title>
@@ -13,7 +15,6 @@ const Header = () => {
                 
             <div className="nav">
                 <Link to="/">Top Movies</Link>
-                <Link to="/">Movie List</Link>
                 <Link to="/">Coming Soon</Link>
             </div>
         </header>

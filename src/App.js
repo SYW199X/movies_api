@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 const App = () => {
     const [baseUrl, setBaseUrl] = useState(false);
     useEffect(() => {
-        console.log("fetch called");
+        console.log("app called");
         fetch("https://api.themoviedb.org/3/configuration?api_key=393863da5a92eb3da8aad0a004438259")
             .then(res => res.json())
             .then(api => setBaseUrl(`${api.images.secure_base_url}${api.images.poster_sizes[5]}`))

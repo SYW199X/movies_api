@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Link } from 'react-router-dom';
 import poster from '../poster.png'
@@ -7,8 +8,12 @@ export default function Content( {baseUrl, index, displayObject} ) {
     const props = useSpring({
         to: {opacity: 1}, 
         from: {opacity: 0},
-        config: {duration: 500}
+        config: {duration: 500},
+        position: "relative"
     });
+    useEffect(() => {
+        console.log("content called")
+    }, [])
     return (
         <>
             <animated.div style={props}>
@@ -26,6 +31,7 @@ export default function Content( {baseUrl, index, displayObject} ) {
     )
 }
 const divStyle = {
+    position: "relative",
     height: "60vh",
     marginTop: "5vh",
     display: "flex",
