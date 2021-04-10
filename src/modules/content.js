@@ -12,7 +12,7 @@ export default function Content( {baseUrl, index, displayObject} ) {
         position: "relative"
     });
     useEffect(() => {
-        console.log("content called")
+        // console.log("content called")
     }, [])
     return (
         <>
