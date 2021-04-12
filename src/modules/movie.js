@@ -31,19 +31,21 @@ export default function Movie( {baseUrl} ) {
             </div>
             <div className="text">
                 <h2 style={{"margin": "0"}}>
-                            {fetchedData.current.original_title || fetchedData.current.name}</h2> 
-                {//List creator names if applicable
-                    (!fetchedData.current.created_by || !fetchedData.current.created_by[0]) ? null :
+                    {/* English name takes precedence */}
+                    {fetchedData.current.title || 
+                    fetchedData.current.original_title || 
+                    fetchedData.current.name}
+                </h2> 
+                {/* List creator names if applicable */}
+                {(!fetchedData.current.created_by || !fetchedData.current.created_by[0]) ? null :
                     <>From {fetchedData.current.created_by.reduce((creators, creator, i, arr) => {
                         let flag = false;
                         if (i === arr.length - 1) flag = true;
                         return `${creators}${creators ? (flag ? ' and' : ',') : ''} ${creator.name}`;
-                    }, '')}<br/></>
-                } 
-                {//List release or initial air date if applicable
-                    (!fetchedData.current.release_date && !fetchedData.current.first_air_date) ? null :
-                    <>{fetchedData.current.release_date || fetchedData.current.first_air_date}</>
-                }
+                    }, '')}<br/></>} 
+                {/* List release or initial air date if applicable */}
+                {(!fetchedData.current.release_date && !fetchedData.current.first_air_date) ? null :
+                    <>{fetchedData.current.release_date || fetchedData.current.first_air_date}</>}
             </div>
         </div>
     )

@@ -1,11 +1,11 @@
+import '../App.css';
 import Content from './content.js';
 import React, { useEffect, useState, useRef } from 'react';
 
 //API key 393863da5a92eb3da8aad0a004438259
-//add a counter to carousel
 
 const INTERVAL = 5000;
-const DISPLAY_NUM = 4;
+const DISPLAY_NUM = 5;
 
 const HomeDisplay = ( {baseUrl} ) => {
     const [displayThis, setDisplay] = useState(false);
@@ -28,9 +28,13 @@ const HomeDisplay = ( {baseUrl} ) => {
             first.current = false;
         })
         .then(() => {
-            const movieArray = Array(Math.ceil(numOfMovies/DISPLAY_NUM)).fill(null)
-                .map((_, i) => <div key={i}>{i+1}</div>);
-            setCounters(movieArray);
+            const movieNumArray = Array(Math.ceil(numOfMovies/DISPLAY_NUM)).fill(null)
+                .map((_, i) => {
+                    return ( i === 0 ? <div className="count currCount" key={i}>{i+1}</div> :
+                        <div className="count" key={i}>{i+1}</div>
+                    )
+                });
+            setCounters(movieNumArray);
         })
         
     }, [])
@@ -42,18 +46,30 @@ const HomeDisplay = ( {baseUrl} ) => {
     
     useEffect (() => {
         if (first.current === true) return;
-        iterate();
+        iterate(DISPLAY_NUM);
         timer.current = setTimeout(() => tick(!tock), INTERVAL);
     }, [tock])
 
-    const clickedIterate = () => {
+    useEffect(() => {
+        if (document.querySelector('.currCount')) {
+            document.querySelectorAll('.currCount').forEach(elem => elem.classList.remove('currCount'));
+        }
+        if (document.querySelectorAll('.count').length === 0) return;
+        document.querySelectorAll('.count')[Math.floor(index/DISPLAY_NUM)].classList.add('currCount');
+    }, [index])
+
+    const leftClick = () => {
         clearTimeout(timer.current);
         timer.current = setTimeout(() => tick(!tock), INTERVAL);
-        iterate();
+        iterate(-DISPLAY_NUM)
     }
-    
-    const iterate = () => {
-        setIndex((index+4)%displayThis.length);
+    const rightClick = () => {
+        clearTimeout(timer.current);
+        timer.current = setTimeout(() => tick(!tock), INTERVAL);
+        iterate(DISPLAY_NUM)
+    }
+    const iterate = (amount) => {
+        setIndex(((index+amount+displayThis.length)%displayThis.length)%displayThis.length);
     }
     const turnVisible = (e) => {
         e.currentTarget.style.opacity = "1";
@@ -65,25 +81,17 @@ const HomeDisplay = ( {baseUrl} ) => {
     return (!load ? <div style={{marginTop: "15vh", fontSize: "40px", textAlign: "center"}}>loading...</div> :
         <>
             <div style={{margin: "0", position: "relative"}}>
-                <Content baseUrl={baseUrl} index={index} displayObject={displayThis} key={index}/>
-                <div style={leftButtonStyle} onMouseOver={turnVisible} onClick={clickedIterate}>&#x25C4;</div>
-                <div style={rightButtonStyle} onMouseOver={turnVisible} onClick={clickedIterate}>&#x25BA;</div>
+                <Content baseUrl={baseUrl} index={index} displayObject={displayThis} displayNum={DISPLAY_NUM} key={index}/>
+                <div style={leftButtonStyle} onMouseOver={turnVisible} onClick={leftClick}>&#x25C4;</div>
+                <div style={rightButtonStyle} onMouseOver={turnVisible} onClick={rightClick}>&#x25BA;</div>
             </div>
-        <div style={{display:"grid", placeItems:"center"}}>
-            <div style={counterStyle}>{counters}</div>
-        </div>
+            <div style={{display:"grid", placeItems:"center"}}>
+                <div className="counter">{counters}</div>
+            </div>
         </>
     )
 }
-const counterStyle = {
-    marginTop: "2vh", 
-    fontSize: "1.5em", 
-    fontWeight: "700",
-    fontFamily: "Arial, sans-serif",
-    display: "flex",
-    justifyContent: "space-between",
-    width: "10%"
-}
+
 const buttonStyle = {
     position: "absolute",
     top: "0",
