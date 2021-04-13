@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from 'react';
 //API key 393863da5a92eb3da8aad0a004438259
 
 const INTERVAL = 5000;
-const DISPLAY_NUM = 5;
+const DISPLAY_NUM = 4;
 
 const HomeDisplay = ( {baseUrl} ) => {
     const [displayThis, setDisplay] = useState(false);
