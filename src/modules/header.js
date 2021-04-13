@@ -13,8 +13,8 @@ const Header = () => {
             </div>
                 
             <div className="nav">
-                <Link to="/">Top Movies</Link>
-                <Link to="/">Coming Soon</Link>
+                <Link to="/movies_api">Top Movies</Link>
+                {/* <Link to="./">Coming Soon</Link> */}
             </div>
         </header>
     )
